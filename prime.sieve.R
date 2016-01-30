@@ -39,9 +39,13 @@ prime.sieve.new <- function(n){
     i <- 1
     # While p^2 <= n
     while(new.vec[i]**2 <= new.vec[length(new.vec)]){
-      new.vec <- setdiff(new.vec, seq(new.vec[i]**2,  new.vec[length(new.vec)], 2*new.vec[i]))
+      # Remove numbers of the form p^2 + 2p from new.vec
+      new.vec <- setdiff(new.vec, 
+                         seq(new.vec[i]**2,  
+                             new.vec[length(new.vec)], 
+                             2*new.vec[i]))
       
-      i <- i+1
+      i <- i+1 # Go to next p
     }
     return(new.vec)
     
