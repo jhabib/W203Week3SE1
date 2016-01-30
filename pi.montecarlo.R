@@ -23,9 +23,16 @@ test.vector <- apply(coords, 1, FUN='is.inside.circle')
 # We multiply that by the area of a square with side=1 to get estimate of pi
 pi.estimate <- sum(test.vector)/length(test.vector)*4
 
+# Calculate the theoretical variance of pi.estimate
+# Let r be the result of is.inside.circle(coord)
+r.expectation = (pi.estimate/4)*(1) + (pi.estimate/4)*(0)
+r_squared.expectation = (pi.estimate/4)*(1)**2 + (pi.estimate/4)*(0)**2
 
+#variance = r_squared.expectation - (r.expectation)**2
+variance.theoretical <- (pi.estimate/4)*(1-pi.estimate/4)
 
-# Estimate pi n times with a given sample size for each estimate
+# Function for estimating pi n times 
+# where sample size for each estimate and number of estimates are given
 pi.estimates.n <- function(sample.size, trials){
   pi.estimates.array <- c()
   i <- 1
@@ -36,3 +43,10 @@ pi.estimates.n <- function(sample.size, trials){
   }
   return(pi.estimates.array)
 }
+
+# Numerically calculate the variance of pi.estimates
+# where sample size = 100000 and number of trials = 100
+
+pi.estimates <- pi.estimates.n(100000, 10)
+
+variance.numerical <- mean((mean(pi.estimates/4)-(pi.estimates/4))^2)
