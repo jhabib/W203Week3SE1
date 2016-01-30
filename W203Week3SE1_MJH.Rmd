@@ -129,6 +129,8 @@ pi.estimates.n <- function(sample.size, trials){
 
 pi.estimates <- pi.estimates.n(100000, 10)
 
+print(head(pi.estimates))
+
 variance.numerical <- mean((mean(pi.estimates/4)-(pi.estimates/4))^2)
 
 print(variance.numerical)
