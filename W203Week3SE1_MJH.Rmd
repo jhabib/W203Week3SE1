@@ -81,6 +81,10 @@ coords <- cbind(runif(n, -1, 1), runif(n, -1, 1))
 hist(coords[,1])
 hist(coords[,2])
 
+# Create a plot of our points, red are inside circle, blue are outside
+plot(coords[,1][1:100000], coords[,2][1:100000], type="p", 
+     col = ifelse(coords[,1]**2 + coords[,2]**2 <= 1, "indianred1", "royalblue1"))
+
 # Pass coords to is.inside.circle and get 1 or 0 for each
 # Store this result in a vector
 test.vector <- apply(coords, 1, FUN='is.inside.circle')
@@ -105,6 +109,12 @@ r_squared.expectation = (pi.estimate/4)*(1)**2 + (pi.estimate/4)*(0)**2
 variance.theoretical <- (pi.estimate/4)*(1-pi.estimate/4)
 
 print(variance.theoretical)
+
+# Calculate theoretical variance of pi.estimate
+variance.theoretical.pi <- variance.theoretical*16
+
+print(variance.theoretical.pi)
+
 ```
 
 Next we estimate the variance of r by running the simulation over n trials.
@@ -131,9 +141,15 @@ pi.estimates <- pi.estimates.n(100000, 10)
 
 print(head(pi.estimates))
 
+# Calculate the variance in the probability of a random point failling inside the circle
 variance.numerical <- mean((mean(pi.estimates/4)-(pi.estimates/4))^2)
 
 print(variance.numerical)
+
+# Calculate the variance in our estimates of Pi
+variance.numerical.pi <- variance.numerical*16
+
+print(variance.numerical.pi)
 ```
 
-We can see from the above that variance decreases as the sample size and number of trials increases.
+We can see from the above that variance decreases as the sample size of trials increases.
